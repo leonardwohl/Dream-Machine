@@ -31,8 +31,8 @@ public class ResourceManager {
 				if (r.numInstances <= 0) {
 					r.data.dispose();
 					textures.remove(entry.getKey());
-					break;
 				}
+				break;
 			}
 		}
 	}
