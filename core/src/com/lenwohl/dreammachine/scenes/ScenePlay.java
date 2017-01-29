@@ -3,12 +3,13 @@ package com.lenwohl.dreammachine.scenes;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.lenwohl.dreammachine.DreamMachine;
+import com.lenwohl.dreammachine.main.DreamMachine;
+import com.lenwohl.dreammachine.main.ResourceManager;
+import com.lenwohl.dreammachine.rendering.RenderingManager;
 
 public class ScenePlay extends Scene {
 	
 	private SpriteBatch sb;
-	
 	private Texture bg;
 	private Texture kev;
 	
@@ -18,9 +19,9 @@ public class ScenePlay extends Scene {
 	
 	@Override
 	public void init() {
-		sb = new SpriteBatch();
-		bg = new Texture("bg2.png");
-		kev = new Texture("kevin.png");
+		sb = RenderingManager.getSpriteBatch();
+		bg = ResourceManager.getTexture("bg2.png");
+		kev = ResourceManager.getTexture("kevin.png");
 	}
 	
 	@Override
@@ -40,8 +41,6 @@ public class ScenePlay extends Scene {
 	
 	@Override
 	public void exit() {
-		bg.dispose();
-		kev.dispose();
 	}
 	
 }

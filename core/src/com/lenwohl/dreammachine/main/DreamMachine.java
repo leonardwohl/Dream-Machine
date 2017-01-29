@@ -1,10 +1,11 @@
-package com.lenwohl.dreammachine;
+package com.lenwohl.dreammachine.main;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 
+import com.lenwohl.dreammachine.rendering.RenderingManager;
 import com.lenwohl.dreammachine.scenes.SceneManager;
 
 public class DreamMachine extends ApplicationAdapter {
@@ -15,7 +16,9 @@ public class DreamMachine extends ApplicationAdapter {
 
 	@Override
 	public void create () {
-		SceneManager.initialize();
+		SceneManager.initialize();	// All static manager classes must be initialized
+		ResourceManager.initialize();
+		RenderingManager.initialize();
 		SceneManager.pushScene(SceneManager.EnumScene.MENU);
 	}
 
@@ -35,7 +38,5 @@ public class DreamMachine extends ApplicationAdapter {
 
 	@Override
 	public void dispose () {
-		
 	}
 }
-

@@ -2,7 +2,7 @@ package com.lenwohl.dreammachine.states;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.lenwohl.dreammachine.DreamMachine;
+import com.lenwohl.dreammachine.main.DreamMachine;
 
 /**
  * Created by Len Wohl on 1/28/2017.
