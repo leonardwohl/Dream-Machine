@@ -27,7 +27,8 @@ public class ScenePlay extends Scene {
 	@Override
 	public void update() {
 		if(Gdx.input.justTouched()) {
-			SceneManager.switchScene(SceneManager.EnumScene.MENU);
+			//SceneManager.switchScene(SceneManager.EnumScene.MENU);
+			SceneManager.popScene();
 		}
 	}
 	
@@ -41,6 +42,8 @@ public class ScenePlay extends Scene {
 	
 	@Override
 	public void exit() {
+		ResourceManager.freeTexture(bg);
+		ResourceManager.freeTexture(kev);
 	}
 	
 }
