@@ -1,4 +1,4 @@
-package States;
+package com.lenwohl.dreammachine.states;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -17,7 +17,7 @@ public class StateManager {
     }
 
     public void push(State s){
-            states.push(s);
+        states.push(s);
     }
     public void pop(){
         states.pop();

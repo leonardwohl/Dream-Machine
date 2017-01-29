@@ -1,4 +1,4 @@
-package States;
+package com.lenwohl.dreammachine.states;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;

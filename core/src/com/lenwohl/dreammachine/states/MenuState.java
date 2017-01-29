@@ -1,5 +1,6 @@
-package States;
+package com.lenwohl.dreammachine.states;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.lenwohl.dreammachine.DreamMachine;
@@ -8,25 +9,28 @@ import com.lenwohl.dreammachine.DreamMachine;
  * Created by Len Wohl on 1/28/2017.
  */
 
-public class PlayState extends State {
+public class MenuState extends State{
 
-    private Texture kev;
     private Texture bg;
+    private Texture kev;
 
-    protected PlayState(StateManager sm) {
+    public MenuState(StateManager sm) {
         super(sm);
+        bg = new Texture("bg1.png");
         kev = new Texture("kevin.png");
-        bg = new Texture("bg2.png");
     }
 
     @Override
-    protected void handleInput() {
-
+    public void handleInput() {
+        if(Gdx.input.justTouched()) {
+            sm.push(new PlayState(sm));
+            dispose();
+        }
     }
 
     @Override
     public void update(float dt) {
-
+        handleInput();
     }
 
     @Override
@@ -39,7 +43,8 @@ public class PlayState extends State {
 
     @Override
     public void dispose() {
-
+        bg.dispose();
+        kev.dispose();
     }
 }
 
