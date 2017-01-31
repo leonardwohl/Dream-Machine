@@ -5,8 +5,7 @@ import java.util.Stack;
 public class SceneManager {
 	
 	public enum EnumScene {
-		MENU,
-		PLAY
+		MENU
 	}
 	
 	private static Stack<Scene> scenes;
@@ -19,6 +18,9 @@ public class SceneManager {
 		popScene = false;
 	}
 	
+	// Exit and pop the top scene or push and initialize a new one
+	// (if popScene, pushScene, switchScene, or reloadScene have been called)
+	// Then update the current top scene
 	public static void update() {
 		if (popScene) {
 			if (!scenes.isEmpty()) {
@@ -30,7 +32,6 @@ public class SceneManager {
 		if (sceneToPush != null) {
 			switch (sceneToPush) {
 				case MENU: scenes.push(new SceneMenu()); break;
-				case PLAY: scenes.push(new ScenePlay()); break;
 			}
 			sceneToPush = null;
 			scenes.peek().init();
@@ -40,25 +41,30 @@ public class SceneManager {
 		}
 	}
 	
+	// Render the top scene
 	public static void render() {
 		if (!scenes.isEmpty()) {
 			scenes.peek().render();
 		}
 	}
 	
+	// Push a scene at the next update
 	public static void pushScene(EnumScene sceneID) {
 		sceneToPush = sceneID;
 	}
 	
+	// Pop the top scene at the next update
 	public static void popScene() {
 		popScene = true;
 	}
 	
+	// Pop the top scene and push a new one at the next update
 	public static void switchScene(EnumScene sceneID) {
 		popScene = true;
 		sceneToPush = sceneID;
 	}
 	
+	// Pop the top scene and push it back on at the next update
 	public static void reloadScene() {
 		popScene = true;
 		sceneToPush = scenes.peek().getSceneID();

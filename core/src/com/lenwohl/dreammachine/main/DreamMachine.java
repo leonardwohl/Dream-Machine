@@ -1,14 +1,11 @@
 package com.lenwohl.dreammachine.main;
 
-import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 
 import com.lenwohl.dreammachine.gps.AbstractGPSInterface;
-import com.lenwohl.dreammachine.gps.AndroidGPSInterface;
-import com.lenwohl.dreammachine.gps.DesktopGPSEmulator;
 import com.lenwohl.dreammachine.rendering.RenderingManager;
 import com.lenwohl.dreammachine.scenes.SceneManager;
 
@@ -18,7 +15,8 @@ public class DreamMachine extends ApplicationAdapter {
 	public static final int HEIGHT = 800;
 	public static final String TITLE = "Dream Machine";
 	
-	public static AbstractGPSInterface gpsInterface;
+	// TODO: gpsInterface is only stored here temporarily. Should be moved somewhere else eventually
+	public AbstractGPSInterface gpsInterface;
 	
 	@Override
 	public void create () {
@@ -26,9 +24,6 @@ public class DreamMachine extends ApplicationAdapter {
 		ResourceManager.initialize();
 		RenderingManager.initialize();
 		SceneManager.pushScene(SceneManager.EnumScene.MENU);
-		
-		gpsInterface = Gdx.app.getType() == Application.ApplicationType.Android ? new AndroidGPSInterface() : new DesktopGPSEmulator();
-		
 	}
 
 	@Override
@@ -49,7 +44,7 @@ public class DreamMachine extends ApplicationAdapter {
 	public void dispose () {
 	}
 	
-	public static AbstractGPSInterface getGpsInterface() {
+	public AbstractGPSInterface getGpsInterface() {
 		return gpsInterface;
 	}
 	

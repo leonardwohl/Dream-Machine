@@ -7,10 +7,17 @@ import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.lenwohl.dreammachine.main.DreamMachine;
 
 public class AndroidLauncher extends AndroidApplication {
+	
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-		initialize(new DreamMachine(), config);
+		
+		DreamMachine dreamMachine = new DreamMachine();
+		dreamMachine.gpsInterface = new AndroidGPSInterface();
+		
+		initialize(dreamMachine, config);
 	}
+	
 }
