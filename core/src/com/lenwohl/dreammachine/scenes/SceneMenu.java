@@ -1,6 +1,5 @@
 package com.lenwohl.dreammachine.scenes;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.lenwohl.dreammachine.main.DreamMachine;
@@ -26,9 +25,7 @@ public class SceneMenu extends Scene {
 	
 	@Override
 	public void update() {
-		if(Gdx.input.justTouched()) {
-			SceneManager.pushScene(SceneManager.EnumScene.PLAY);
-		}
+		
 	}
 	
 	@Override

@@ -13,6 +13,7 @@ public class ResourceManager {
 		textures = new HashMap<String, Resource<Texture>>();
 	}
 	
+	// If the texture hasn't been load yet, load it. Increment the number of instances of the texture, and return it
 	public static Texture getTexture(String filepath) {
 		if (!textures.containsKey(filepath)) {
 			textures.put(filepath, new Resource<Texture>(new Texture(filepath)));
@@ -21,6 +22,7 @@ public class ResourceManager {
 		return textures.get(filepath).data;
 	}
 	
+	// Decrement the number of instances of the texture, and if it reaches zero, dispose of the texture and remove it from the map
 	// In order to properly dispose of a resource, every call to getTexture() must be matched by a call to freeTexture()
 	// Resources should never be disposed manually since the same resource is shared by multiple objects
 	public static void freeTexture(Texture t) {
@@ -37,9 +39,10 @@ public class ResourceManager {
 		}
 	}
 	
+	// Simple wrapper for a resource containing a tracker for the number of times it has been requested but not freed
 	private static class Resource<T> {
 		public T data;
-		public int numInstances;	// The number of times this data has been requested but not freed
+		public int numInstances;
 		public Resource(T data) {
 			this.data = data;
 			this.numInstances = 0;
