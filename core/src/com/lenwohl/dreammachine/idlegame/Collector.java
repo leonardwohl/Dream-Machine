@@ -26,7 +26,6 @@ public class Collector {
 	}
 	
 	public void emptyStoredPoints() {
-		updatePoints();
 		storedPoints = 0;
 	}
 	

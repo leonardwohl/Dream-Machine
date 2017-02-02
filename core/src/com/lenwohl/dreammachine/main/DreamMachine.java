@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 
+import com.lenwohl.dreammachine.audio.AudioManager;
 import com.lenwohl.dreammachine.gps.AbstractGPSInterface;
 import com.lenwohl.dreammachine.rendering.RenderingManager;
 import com.lenwohl.dreammachine.scenes.SceneManager;
@@ -23,6 +24,7 @@ public class DreamMachine extends ApplicationAdapter {
 		SceneManager.initialize();	// All static manager classes must be initialized
 		ResourceManager.initialize();
 		RenderingManager.initialize();
+		AudioManager.initialize();
 		SceneManager.pushScene(SceneManager.EnumScene.MENU);
 	}
 
