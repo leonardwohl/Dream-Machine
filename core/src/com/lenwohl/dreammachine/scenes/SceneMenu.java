@@ -11,16 +11,17 @@ import com.lenwohl.dreammachine.idlegame.Collector;
 import com.lenwohl.dreammachine.main.DreamMachine;
 import com.lenwohl.dreammachine.main.ResourceManager;
 import com.lenwohl.dreammachine.rendering.RenderingManager;
+import com.lenwohl.dreammachine.ui.ShittyButton;
 
 public class SceneMenu extends Scene {
 	
-	private SpriteBatch sb;
 	private Texture bg;
 	private Texture kev;
 	private BitmapFont font;
 	private OrthographicCamera camera;
 	private Collector collector;
 	private int accumulatedPoints = 0;
+	private ShittyButton kevButton;
 	
 	public SceneMenu() {
 		super(SceneManager.EnumScene.MENU);
@@ -29,28 +30,42 @@ public class SceneMenu extends Scene {
 	@Override
 	public void init() {
 		
-		sb = RenderingManager.getSpriteBatch();
 		bg = ResourceManager.getTexture("bg1.png");
-		kev = ResourceManager.getTexture("kevin.png");
+		
 		font = new BitmapFont();	// BitmapFont is a bad way of rendering font, but it works well enough for testing purposes
 		font.getData().setScale(4);
+		
 		camera = new OrthographicCamera(DreamMachine.WIDTH, DreamMachine.HEIGHT);	// Camera management should be handled in RenderingManager
 		camera.position.set(camera.viewportWidth/2, camera.viewportHeight/2, 0);
 		camera.update();
+		
 		collector = new Collector(60.0f, 120.0f);
+		
 		AudioManager.playMusic("music.mp3", false);
+		
+		kev = ResourceManager.getTexture("kevin.png");
+		kevButton = new ShittyButton(50, 200, kev.getWidth()*4, kev.getHeight(), kev, new ShittyButton.Listener() {
+			@Override
+			public void onClick() {
+				accumulatedPoints += collector.getStoredPoints();
+				collector.emptyStoredPoints();
+				AudioManager.playSound("blip.mp3");
+			}
+		});
 		
 	}
 	
 	@Override
 	public void update() {
 		
-		if (Gdx.input.justTouched()) {
+/*		if (Gdx.input.justTouched()) {
 			accumulatedPoints += collector.getStoredPoints();
 			collector.emptyStoredPoints();
 			AudioManager.playSound("blip.mp3");
-		}
+		}*/
 		
+		kevButton.update();
+
 		if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
 			AudioManager.pauseMusic();
 		}
@@ -68,19 +83,25 @@ public class SceneMenu extends Scene {
 	
 	@Override
 	public void render() {
-		
+	
+		SpriteBatch sb = RenderingManager.getSpriteBatch();
 		sb.setProjectionMatrix(camera.combined);
 		sb.begin();
+		
 		sb.draw(bg, 0, 0, DreamMachine.WIDTH, DreamMachine.HEIGHT);
-		sb.draw(kev, (DreamMachine.WIDTH/2)-kev.getWidth()/2, (DreamMachine.HEIGHT/2)-kev.getHeight()/2);
+		//sb.draw(kev, (DreamMachine.WIDTH/2)-kev.getWidth()/2, (DreamMachine.HEIGHT/2)-kev.getHeight()/2);
+		
+		kevButton.render();
+		
 		font.draw(sb, "Music Controls", 50, 790);
 		font.draw(sb, "Pause: 1", 20, 720);
 		font.draw(sb, "Resume: 2", 20, 640);
 		font.draw(sb, "Stop: 3", 20, 560);
 		font.draw(sb, "Play: 4", 20, 480);
-		font.draw(sb, "Touch to collect", 50, 180);
+		font.draw(sb, "Click Kev to collect", 0, 180);
 		font.draw(sb, String.format("%.0f / %.0f   (%d)",
 				collector.getStoredPoints(), collector.getMaximumStoredPoints(), accumulatedPoints), 50, 100);
+		
 		sb.end();
 		
 	}
