@@ -6,13 +6,14 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.lenwohl.dreammachine.audio.AudioManager;
+import com.lenwohl.dreammachine.main.AudioManager;
 import com.lenwohl.dreammachine.gui.Button;
 import com.lenwohl.dreammachine.gui.Window;
 import com.lenwohl.dreammachine.idlegame.Collector;
 import com.lenwohl.dreammachine.main.DreamMachine;
+import com.lenwohl.dreammachine.input.InputEvent;
 import com.lenwohl.dreammachine.main.ResourceManager;
-import com.lenwohl.dreammachine.rendering.RenderingManager;
+import com.lenwohl.dreammachine.main.RenderingManager;
 
 public class SceneMenu extends Scene {
 	
@@ -124,6 +125,15 @@ public class SceneMenu extends Scene {
 		
 		sb.end();
 		
+	}
+	
+	@Override
+	public void processInputEvent(InputEvent event) {
+		if (event.type == InputEvent.Type.KEY_DOWN) {
+			if (event.key == Input.Keys.E) {
+				AudioManager.playSound("blip.mp3");
+			}
+		}
 	}
 	
 	@Override

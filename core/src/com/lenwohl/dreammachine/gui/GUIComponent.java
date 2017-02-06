@@ -1,5 +1,7 @@
 package com.lenwohl.dreammachine.gui;
 
+import com.lenwohl.dreammachine.input.InputEvent;
+
 import java.util.ArrayList;
 
 // GUI is made of up GUI Components. Each GUI Component may have a parent and any number of child components.
@@ -26,8 +28,8 @@ public abstract class GUIComponent {
 	}
 	
 	public abstract void update();
-	
 	public abstract void render();
+	public abstract void processInputEvent(InputEvent event);
 	
 	public void addChild(GUIComponent child) {
 		childComponents.add(child);

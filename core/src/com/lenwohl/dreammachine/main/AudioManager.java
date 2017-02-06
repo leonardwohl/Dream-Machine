@@ -1,4 +1,4 @@
-package com.lenwohl.dreammachine.audio;
+package com.lenwohl.dreammachine.main;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;

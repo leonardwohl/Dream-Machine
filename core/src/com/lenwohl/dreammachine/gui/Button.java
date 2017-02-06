@@ -2,7 +2,8 @@ package com.lenwohl.dreammachine.gui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.lenwohl.dreammachine.rendering.RenderingManager;
+import com.lenwohl.dreammachine.input.InputEvent;
+import com.lenwohl.dreammachine.main.RenderingManager;
 
 // Simple component with a texture and a pointer to a listener. When the screen is clicked within the bounds of the button,
 // The onClick of the listener is called.
@@ -35,6 +36,10 @@ public class Button extends GUIComponent {
 	@Override
 	public void render() {
 		RenderingManager.getSpriteBatch().draw(texture, screenX, screenY, width, height);
+	}
+	
+	@Override
+	public void processInputEvent(InputEvent event) {
 	}
 	
 	// Pass an implementation to the button to define an on-click action

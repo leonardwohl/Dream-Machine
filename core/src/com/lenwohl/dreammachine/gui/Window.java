@@ -1,7 +1,8 @@
 package com.lenwohl.dreammachine.gui;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.lenwohl.dreammachine.rendering.RenderingManager;
+import com.lenwohl.dreammachine.input.InputEvent;
+import com.lenwohl.dreammachine.main.RenderingManager;
 
 // TODO: Add control over the positions of child components within the window
 
@@ -25,6 +26,10 @@ public class Window extends GUIComponent {
 	public void render() {
 		RenderingManager.getSpriteBatch().draw(texture, screenX, screenY, width, height);
 		renderChildComponents();
+	}
+	
+	@Override
+	public void processInputEvent(InputEvent event) {
 	}
 	
 }
