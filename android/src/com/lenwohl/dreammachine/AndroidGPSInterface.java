@@ -10,7 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderApi;
 import com.google.android.gms.location.LocationServices;
-import com.lenwohl.dreammachine.gps.AbstractGPSInterface;
+import com.lenwohl.dreammachine.main.AbstractGPSInterface;
 
 public class AndroidGPSInterface extends AbstractGPSInterface {
 

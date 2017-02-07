@@ -1,5 +1,7 @@
 package com.lenwohl.dreammachine.scenes;
 
+import com.lenwohl.dreammachine.input.InputEvent;
+
 import java.util.Stack;
 
 public class SceneManager {
@@ -45,6 +47,12 @@ public class SceneManager {
 	public static void render() {
 		if (!scenes.isEmpty()) {
 			scenes.peek().render();
+		}
+	}
+	
+	public static void processInputEvent(InputEvent event) {
+		if (!scenes.isEmpty()) {
+			scenes.peek().processInputEvent(event);
 		}
 	}
 	

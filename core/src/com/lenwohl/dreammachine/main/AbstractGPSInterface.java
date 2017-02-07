@@ -1,4 +1,4 @@
-package com.lenwohl.dreammachine.gps;
+package com.lenwohl.dreammachine.main;
 
 import com.badlogic.gdx.math.Vector2;
 
