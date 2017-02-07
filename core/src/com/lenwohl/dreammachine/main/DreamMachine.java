@@ -1,5 +1,6 @@
 package com.lenwohl.dreammachine.main;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -16,16 +17,16 @@ public class DreamMachine extends ApplicationAdapter {
 	public static final int HEIGHT = 800;
 	public static final String TITLE = "Dream Machine";
 	
-	// TODO: gpsInterface is only stored here temporarily. Should be moved somewhere else eventually
-	public AbstractGPSInterface gpsInterface;
+	public static AbstractGPSInterface gpsInterface;
 	
 	@Override
 	public void create () {
 		SceneManager.initialize();	// All static manager classes must be initialized
 		ResourceManager.initialize();
 		RenderingManager.initialize();
-		AudioManager.initialize();
+        AudioManager.initialize();
 		SceneManager.pushScene(SceneManager.EnumScene.MENU);
+		
 	}
 
 	@Override
@@ -46,7 +47,7 @@ public class DreamMachine extends ApplicationAdapter {
 	public void dispose () {
 	}
 	
-	public AbstractGPSInterface getGpsInterface() {
+	public static AbstractGPSInterface getGpsInterface() {
 		return gpsInterface;
 	}
 	

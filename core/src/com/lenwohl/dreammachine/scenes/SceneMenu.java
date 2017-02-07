@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.lenwohl.dreammachine.audio.AudioManager;
+import com.lenwohl.dreammachine.gps.AbstractGPSInterface;
 import com.lenwohl.dreammachine.idlegame.Collector;
 import com.lenwohl.dreammachine.main.DreamMachine;
 import com.lenwohl.dreammachine.main.ResourceManager;
@@ -21,6 +22,8 @@ public class SceneMenu extends Scene {
 	private OrthographicCamera camera;
 	private Collector collector;
 	private int accumulatedPoints = 0;
+    private AbstractGPSInterface gpsInterface;
+
 	
 	public SceneMenu() {
 		super(SceneManager.EnumScene.MENU);
@@ -38,6 +41,7 @@ public class SceneMenu extends Scene {
 		camera.position.set(camera.viewportWidth/2, camera.viewportHeight/2, 0);
 		camera.update();
 		collector = new Collector(60.0f, 120.0f);
+        gpsInterface = DreamMachine.gpsInterface;
 		AudioManager.playMusic("music.mp3", false);
 		
 	}
@@ -81,6 +85,7 @@ public class SceneMenu extends Scene {
 		font.draw(sb, "Touch to collect", 50, 180);
 		font.draw(sb, String.format("%.0f / %.0f   (%d)",
 				collector.getStoredPoints(), collector.getMaximumStoredPoints(), accumulatedPoints), 50, 100);
+        font.draw(sb, "GPS:"+" "+gpsInterface.getCurrentGPSPosition().toString(), 100, 300);
 		sb.end();
 		
 	}

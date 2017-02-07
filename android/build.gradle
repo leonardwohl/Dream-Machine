@@ -19,7 +19,7 @@ android {
     }
     defaultConfig {
         applicationId "com.lenwohl.dreammachine"
-        minSdkVersion 8
+        minSdkVersion 9
         targetSdkVersion 24
     }
 }
