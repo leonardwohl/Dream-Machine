@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.lenwohl.dreammachine.main.AbstractGPSInterface;
 import com.lenwohl.dreammachine.main.AudioManager;
 import com.lenwohl.dreammachine.gui.Button;
 import com.lenwohl.dreammachine.gui.Window;
@@ -26,6 +27,7 @@ public class SceneMenu extends Scene {
 	private OrthographicCamera camera;
 	private Collector collector;
 	private int accumulatedPoints = 0;
+    private AbstractGPSInterface gpsInterface;
 	private Button kevButton;
 	private Button yesButton;
 	private Button noButton;
@@ -50,6 +52,8 @@ public class SceneMenu extends Scene {
 		camera.position.set(camera.viewportWidth/2, camera.viewportHeight/2, 0);
 		camera.update();
 		collector = new Collector(60.0f, 120.0f);
+        gpsInterface = DreamMachine.gpsInterface;
+
 		
 		window = new Window(10, 200, 400, 100, green);
 		yesButton = new Button(50, 10, yes.getWidth() * 4, yes.getHeight() * 4, yes, new Button.Listener() {
@@ -76,7 +80,7 @@ public class SceneMenu extends Scene {
 				AudioManager.playSound("blip.mp3");
 			}
 		});
-		
+
 		AudioManager.playMusic("music.mp3", false);
 		
 	}
@@ -122,7 +126,7 @@ public class SceneMenu extends Scene {
 		font.draw(sb, "Play: 4", 20, 480);
 		font.draw(sb, "Click Kev to collect", 0, 180);
 		font.draw(sb, String.format("%.0f / %.0f   (%d)", collector.getStoredPoints(), collector.getMaximumStoredPoints(), accumulatedPoints), 50, 100);
-		
+        font.draw(sb, "GPS:"+" "+gpsInterface.getCurrentGPSPosition().toString(), 100, 300);
 		sb.end();
 		
 	}
