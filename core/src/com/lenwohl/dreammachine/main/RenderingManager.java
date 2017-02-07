@@ -1,4 +1,4 @@
-package com.lenwohl.dreammachine.rendering;
+package com.lenwohl.dreammachine.main;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 

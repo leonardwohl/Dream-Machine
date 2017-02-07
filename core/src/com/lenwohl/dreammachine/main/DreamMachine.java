@@ -5,9 +5,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 
-import com.lenwohl.dreammachine.audio.AudioManager;
-import com.lenwohl.dreammachine.gps.AbstractGPSInterface;
-import com.lenwohl.dreammachine.rendering.RenderingManager;
+import com.lenwohl.dreammachine.input.InputEvent;
+import com.lenwohl.dreammachine.input.InputHandler;
 import com.lenwohl.dreammachine.scenes.SceneManager;
 
 public class DreamMachine extends ApplicationAdapter {
@@ -18,6 +17,7 @@ public class DreamMachine extends ApplicationAdapter {
 	
 	// TODO: gpsInterface is only stored here temporarily. Should be moved somewhere else eventually
 	public AbstractGPSInterface gpsInterface;
+	public InputHandler inputHandler;
 	
 	@Override
 	public void create () {
@@ -26,6 +26,8 @@ public class DreamMachine extends ApplicationAdapter {
 		RenderingManager.initialize();
 		AudioManager.initialize();
 		SceneManager.pushScene(SceneManager.EnumScene.MENU);
+		inputHandler = new InputHandler();
+		Gdx.input.setInputProcessor(inputHandler);
 	}
 
 	@Override
@@ -36,12 +38,22 @@ public class DreamMachine extends ApplicationAdapter {
 		SceneManager.update();
 		SceneManager.render();
 		
-		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-			Gdx.app.exit();
-		}
-		
 	}
 
+	public void processInputEvent(InputEvent event) {
+		// A simple example of input handling:
+		// Intercept a press of the Escape key to exit the app, or simply pass the input along.
+		// "return" may be used to completely intercept an input, or the input can be handled without
+		// returning so that other classes can handle it as well.
+		if (event.type == InputEvent.Type.KEY_DOWN) {
+			if (event.key == Input.Keys.ESCAPE) {
+				Gdx.app.exit();
+				return;
+			}
+		}
+		SceneManager.processInputEvent(event);
+	}
+	
 	@Override
 	public void dispose () {
 	}
