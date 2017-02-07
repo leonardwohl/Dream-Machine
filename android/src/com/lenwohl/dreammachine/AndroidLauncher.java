@@ -43,8 +43,8 @@ public class AndroidLauncher extends AndroidApplication implements ConnectionCal
                     .build();
         }
 
-        initialize(dm, config);
 
+        initialize(dm, config);
         updateValuesFromBundle(savedInstanceState);
 	}
 
@@ -61,13 +61,11 @@ public class AndroidLauncher extends AndroidApplication implements ConnectionCal
     }
 
     @Override
-    public void onConnected(Bundle savedInstanceState) {
+    public void onConnected(Bundle savedInstanceState){
 
-            if (mRequestingLocationUpdates) { //breaks here? before here?
-                startLocationUpdates();
-            }
-
-
+        if (mRequestingLocationUpdates) { //breaks here? before here?
+            startLocationUpdates();
+        }
     }
 
     @Override
@@ -102,6 +100,7 @@ public class AndroidLauncher extends AndroidApplication implements ConnectionCal
             gps.setGpsEnabled(true);
             mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
             gps.updateLocation(mLastLocation);
+            mLocationRequest = new LocationRequest();
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
         }
     }
