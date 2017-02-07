@@ -18,7 +18,8 @@ public class InputEvent {
 	public float y = 0;
 	public int button = 0;
 	public int key = 0;
-	public char character = 'a';
+	public char character = '0';
 	public float scroll = 0;
+	public boolean handled = false;
 	
 }

@@ -1,14 +1,13 @@
 package com.lenwohl.dreammachine.gui;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.lenwohl.dreammachine.input.InputEvent;
 import com.lenwohl.dreammachine.main.RenderingManager;
 
+// TODO: Add animations to buttons
+
 // Simple component with a texture and a pointer to a listener. When the screen is clicked within the bounds of the button,
 // The onClick of the listener is called.
-// Currently doesn't check if button is behind other buttons.
-// TODO: Perhaps the parent or some sort of GUI manager can pass input down to the button, instead of the button checking directly?
 public class Button extends GUIComponent {
 	
 	private Texture texture;
@@ -22,24 +21,27 @@ public class Button extends GUIComponent {
 	
 	@Override
 	public void update() {
-		updateScreenCoordinates();
-		// Check if clicked
-		if (Gdx.input.justTouched()) {
-			float touchX = Gdx.input.getX();
-			float touchY = Gdx.graphics.getHeight() - Gdx.input.getY();	// Invert because input coords start at the top-left corner
-			if ( touchX>screenX && touchX<screenX+width && touchY>screenY && touchY<screenY+height) {
-				listener.onClick();
-			}
-		}
+		updateChildComponents();
 	}
 	
 	@Override
 	public void render() {
+		updateScreenCoordinates();
 		RenderingManager.getSpriteBatch().draw(texture, screenX, screenY, width, height);
+		renderChildComponents();
 	}
 	
 	@Override
-	public void processInputEvent(InputEvent event) {
+	protected void interceptInputEvent(InputEvent event) {
+	}
+	
+	@Override
+	protected void handleInputEvent(InputEvent event) {
+		// Check for click
+		if (event.type == InputEvent.Type.TOUCH_DOWN && isPointWithinBounds(event.x, event.y)) {
+			listener.onClick();
+			event.handled = true;
+		}
 	}
 	
 	// Pass an implementation to the button to define an on-click action

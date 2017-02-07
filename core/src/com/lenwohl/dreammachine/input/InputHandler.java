@@ -37,44 +37,44 @@ public class InputHandler implements InputProcessor {
 	}
 	
 	@Override
-	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+	public boolean touchDown(int x, int y, int pointer, int button) {
 		InputEvent event = new InputEvent();
 		event.type = InputEvent.Type.TOUCH_DOWN;
-		event.x = screenX;
-		event.y = screenY;
+		event.x = x;
+		event.y = Gdx.graphics.getHeight() - y;	// Invert because libgdx input coords start at the top-left
 		event.button = button;
 		dm.processInputEvent(event);
 		return false;
 	}
 	
 	@Override
-	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+	public boolean touchUp(int x, int y, int pointer, int button) {
 		InputEvent event = new InputEvent();
 		event.type = InputEvent.Type.TOUCH_UP;
-		event.x = screenX;
-		event.y = screenY;
+		event.x = x;
+		event.y = Gdx.graphics.getHeight() - y;
 		event.button = button;
 		dm.processInputEvent(event);
 		return false;
 	}
 	
 	@Override
-	public boolean touchDragged(int screenX, int screenY, int pointer) {
+	public boolean touchDragged(int x, int y, int pointer) {
 		InputEvent event = new InputEvent();
 		event.type = InputEvent.Type.TOUCH_DRAG;
-		event.x = screenX;
-		event.y = screenY;
+		event.x = x;
+		event.y = Gdx.graphics.getHeight() - y;
 		dm.processInputEvent(event);
 		return false;
 	}
 	
 	// Mouse moved, scrolled, and key typed might be useful for desktop debugging, maybe?
 	@Override
-	public boolean mouseMoved(int screenX, int screenY) {
+	public boolean mouseMoved(int x, int y) {
 		InputEvent event = new InputEvent();
 		event.type = InputEvent.Type.MOUSE_MOVE;
-		event.x = screenX;
-		event.y = screenY;
+		event.x = x;
+		event.y = Gdx.graphics.getHeight() - y;
 		dm.processInputEvent(event);
 		return false;
 	}
