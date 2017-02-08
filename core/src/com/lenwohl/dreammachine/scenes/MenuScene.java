@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.lenwohl.dreammachine.gui.ScreenContainer;
+import com.lenwohl.dreammachine.gui.TextLabel;
 import com.lenwohl.dreammachine.main.AbstractGPSInterface;
 import com.lenwohl.dreammachine.main.AudioManager;
 import com.lenwohl.dreammachine.gui.Button;
@@ -24,6 +25,7 @@ public class MenuScene extends Scene {
 	private Texture yesTex;
 	private Texture noTex;
 	private Texture greenTex;
+	private Texture purpleTex;
 	private Texture playTex;
 	private Texture pauseTex;
 	private Texture stopTex;
@@ -31,8 +33,10 @@ public class MenuScene extends Scene {
 	private ScreenContainer guiContainer;
 	private Window movingWindow;
 	private Window musicWindow;
+	private Window gpsWindow;
 	
 	private BitmapFont mainFont;
+	private BitmapFont mcFont;
 	private OrthographicCamera camera;
 	private Collector collector;
 	private int accumulatedPoints = 0;
@@ -50,12 +54,12 @@ public class MenuScene extends Scene {
 		yesTex = ResourceManager.getTexture("yes.png");
 		noTex = ResourceManager.getTexture("no.png");
 		greenTex = ResourceManager.getTexture("green.png");
+		purpleTex = ResourceManager.getTexture("purple.png");
 		playTex = ResourceManager.getTexture("play.png");
 		pauseTex = ResourceManager.getTexture("pause.png");
 		stopTex = ResourceManager.getTexture("stop.png");
 		
-		mainFont = new BitmapFont();	// BitmapFont is a bad way of rendering mainFont, but it works well enough for testing purposes
-		mainFont.getData().setScale(4);
+		mainFont = new BitmapFont();
 		camera = new OrthographicCamera(DreamMachine.WIDTH, DreamMachine.HEIGHT);	// Camera management should be handled in RenderingManager
 		camera.position.set(camera.viewportWidth/2, camera.viewportHeight/2, 0);
 		camera.update();
@@ -114,10 +118,32 @@ public class MenuScene extends Scene {
 				AudioManager.playSound("blip.mp3");
 			}
 		});
-
+		
+		gpsWindow = new Window(10, 350, 100, 200, greenTex);
+		Button gpsLenButton = new Button(10, 120, 80, 50, purpleTex, new Button.Listener() {
+			@Override
+			public void onClick() {
+				gpsInterface.setVirtualGPSPosition(40.665463f, -74.292383f);	// Len's House
+			}
+		});
+		Button gpsKevButton = new Button(10, 30, 80, 50, purpleTex, new Button.Listener() {
+			@Override
+			public void onClick() {
+				gpsInterface.setVirtualGPSPosition(40.659110f, -74.314690f);	// Kev's House
+			}
+		});
+		mcFont = new BitmapFont(Gdx.files.internal("mcfont.fnt"));
+		TextLabel gpsLenLabel = new TextLabel(10, 10, "Len", mcFont);
+		TextLabel gpsKevLabel = new TextLabel(10, 10, "Kev", mcFont);
+		gpsLenButton.addChild(gpsLenLabel);
+		gpsKevButton.addChild(gpsKevLabel);
+		gpsWindow.addChild(gpsLenButton);
+		gpsWindow.addChild(gpsKevButton);
+		
 		guiContainer = new ScreenContainer();
 		guiContainer.addChild(kevButton);
 		guiContainer.addChild(musicWindow);
+		guiContainer.addChild(gpsWindow);
 		guiContainer.addChild(movingWindow);
 		
 		//AudioManager.playMusic("music.mp3", false);
@@ -139,9 +165,11 @@ public class MenuScene extends Scene {
 		sb.begin();
 		sb.draw(bgTex, 0, 0, DreamMachine.WIDTH, DreamMachine.HEIGHT);
 		guiContainer.render();	// Render all GUI components
+		mainFont.getData().setScale(4);
 		mainFont.draw(sb, "Click Kev to collect", 0, 180);
 		mainFont.draw(sb, String.format("%.0f / %.0f   (%d)", collector.getStoredPoints(), collector.getMaximumStoredPoints(), accumulatedPoints), 50, 100);
-        mainFont.draw(sb, "GPS:"+" "+gpsInterface.getCurrentGPSPosition().toString(), 50, 600);
+		mainFont.getData().setScale(2);
+		mainFont.draw(sb, "GPS:"+" "+gpsInterface.getCurrentGPSPosition().toString(), 50, 600);
 		sb.end();
 		
 	}
@@ -173,10 +201,12 @@ public class MenuScene extends Scene {
 		ResourceManager.freeTexture(yesTex);
 		ResourceManager.freeTexture(noTex);
 		ResourceManager.freeTexture(greenTex);
+		ResourceManager.freeTexture(purpleTex);
 		ResourceManager.freeTexture(playTex);
 		ResourceManager.freeTexture(pauseTex);
 		ResourceManager.freeTexture(stopTex);
 		mainFont.dispose();
+		mcFont.dispose();
 	}
 	
 }
