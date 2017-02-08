@@ -5,7 +5,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.lenwohl.dreammachine.gui.ScreenContainer;
 import com.lenwohl.dreammachine.main.AbstractGPSInterface;
@@ -33,9 +32,8 @@ public class MenuScene extends Scene {
 	private Window movingWindow;
 	private Window musicWindow;
 	
-	private BitmapFont font;
+	private BitmapFont mainFont;
 	private OrthographicCamera camera;
-	
 	private Collector collector;
 	private int accumulatedPoints = 0;
     private AbstractGPSInterface gpsInterface;
@@ -56,8 +54,8 @@ public class MenuScene extends Scene {
 		pauseTex = ResourceManager.getTexture("pause.png");
 		stopTex = ResourceManager.getTexture("stop.png");
 		
-		font = new BitmapFont();	// BitmapFont is a bad way of rendering font, but it works well enough for testing purposes
-		font.getData().setScale(4);
+		mainFont = new BitmapFont();	// BitmapFont is a bad way of rendering mainFont, but it works well enough for testing purposes
+		mainFont.getData().setScale(4);
 		camera = new OrthographicCamera(DreamMachine.WIDTH, DreamMachine.HEIGHT);	// Camera management should be handled in RenderingManager
 		camera.position.set(camera.viewportWidth/2, camera.viewportHeight/2, 0);
 		camera.update();
@@ -67,13 +65,13 @@ public class MenuScene extends Scene {
 		Button yesButton = new Button(50, 10, yesTex.getWidth() * 4, yesTex.getHeight() * 4, yesTex, new Button.Listener() {
 			@Override
 			public void onClick() {
-				movingWindow.relativeY += 50;
+				movingWindow.setPosition(movingWindow.getRelativeX(), movingWindow.getRelativeY() + 50);
 			}
 		});
 		Button noButton = new Button(200, 10, noTex.getWidth() * 4, noTex.getHeight() * 4, noTex, new Button.Listener() {
 			@Override
 			public void onClick() {
-				movingWindow.relativeY -= 50;
+				movingWindow.setPosition(movingWindow.getRelativeX(), movingWindow.getRelativeY() - 50);
 			}
 		});
 		movingWindow = new Window(10, 200, 400, 100, greenTex);
@@ -122,7 +120,7 @@ public class MenuScene extends Scene {
 		guiContainer.addChild(musicWindow);
 		guiContainer.addChild(movingWindow);
 		
-		AudioManager.playMusic("music.mp3", false);
+		//AudioManager.playMusic("music.mp3", false);
 		
 	}
 	
@@ -141,9 +139,9 @@ public class MenuScene extends Scene {
 		sb.begin();
 		sb.draw(bgTex, 0, 0, DreamMachine.WIDTH, DreamMachine.HEIGHT);
 		guiContainer.render();	// Render all GUI components
-		font.draw(sb, "Click Kev to collect", 0, 180);
-		font.draw(sb, String.format("%.0f / %.0f   (%d)", collector.getStoredPoints(), collector.getMaximumStoredPoints(), accumulatedPoints), 50, 100);
-        font.draw(sb, "GPS:"+" "+gpsInterface.getCurrentGPSPosition().toString(), 50, 600);
+		mainFont.draw(sb, "Click Kev to collect", 0, 180);
+		mainFont.draw(sb, String.format("%.0f / %.0f   (%d)", collector.getStoredPoints(), collector.getMaximumStoredPoints(), accumulatedPoints), 50, 100);
+        mainFont.draw(sb, "GPS:"+" "+gpsInterface.getCurrentGPSPosition().toString(), 50, 600);
 		sb.end();
 		
 	}
@@ -178,7 +176,7 @@ public class MenuScene extends Scene {
 		ResourceManager.freeTexture(playTex);
 		ResourceManager.freeTexture(pauseTex);
 		ResourceManager.freeTexture(stopTex);
-		font.dispose();
+		mainFont.dispose();
 	}
 	
 }

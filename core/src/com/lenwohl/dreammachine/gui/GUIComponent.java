@@ -4,8 +4,6 @@ import com.lenwohl.dreammachine.input.InputEvent;
 
 import java.util.ArrayList;
 
-// TODO: update screen coordinates if and only if they are changed, so that they don't have to be updated on every render or input
-
 // GUI is made of up GUI Components. Each GUI Component may have a parent and any number of child components.
 // Parents are resposible for calling update() and render() on their children. Children must set their screen coordinates
 // relative to those of their parent, if one exists, so that if a parent moves, all children will move accordingly.
@@ -13,14 +11,14 @@ import java.util.ArrayList;
 // in any order, but in most cases, input should be passed down in reverse child component order (opposite of rendering order)
 public abstract class GUIComponent {
 	
-	public float screenX = 0;
-	public float screenY = 0;
-	public float relativeX = 0;
-	public float relativeY = 0;
-	public float width = 0;
-	public float height = 0;
-	public ArrayList<GUIComponent> childComponents;
-	public GUIComponent parentComponent;
+	protected float relativeX = 0;
+	protected float relativeY = 0;
+	protected float screenX = 0;
+	protected float screenY = 0;
+	protected float width = 0;
+	protected float height = 0;
+	protected ArrayList<GUIComponent> childComponents;
+	protected GUIComponent parentComponent;
 	
 	public GUIComponent(float relativeX, float relativeY, float width, float height) {
 		this.relativeX = relativeX;
@@ -29,6 +27,7 @@ public abstract class GUIComponent {
 		this.height = height;
 		childComponents = new ArrayList<GUIComponent>();
 		parentComponent = null;
+		updateScreenCoordinates();
 	}
 	
 	public abstract void update();
@@ -38,10 +37,17 @@ public abstract class GUIComponent {
 	public void addChild(GUIComponent child) {
 		childComponents.add(child);
 		child.parentComponent = this;
+		child.updateScreenCoordinates();
 	}
 	
-	// If component has a parent component, set screen coordinates relative to those of parent
-	// Otherwise, set screen coordinates equal to relative coordinates
+	public void setPosition(float relativeX, float relativeY) {
+		this.relativeX = relativeX;
+		this.relativeY = relativeY;
+		updateScreenCoordinates();
+	}
+	
+	// If a parent exists, set screen coordinates relative to parent screen coordinates. Otherwise, set them to relative to 0
+	// Update the screen coordinates of all child components, since they have likely become invalid
 	protected void updateScreenCoordinates() {
 		if (parentComponent != null) {
 			screenX = parentComponent.screenX + relativeX;
@@ -49,6 +55,9 @@ public abstract class GUIComponent {
 		} else {
 			screenX = relativeX;
 			screenY = relativeY;
+		}
+		for (GUIComponent child : childComponents) {
+			child.updateScreenCoordinates();
 		}
 	}
 	
@@ -66,8 +75,30 @@ public abstract class GUIComponent {
 	
 	// Checks whether or not the passed screen coordinates are within the bounds of the component
 	protected boolean isPointWithinBounds(float x, float y) {
-		updateScreenCoordinates();
 		return (x>screenX && x<screenX+width && y>screenY && y<screenY+height);
 	}
 	
+	public float getRelativeX() {
+		return relativeX;
+	}
+	
+	public float getRelativeY() {
+		return relativeY;
+	}
+	
+	public float getScreenX() {
+		return screenX;
+	}
+	
+	public float getScreenY() {
+		return screenY;
+	}
+	
+	public float getWidth() {
+		return width;
+	}
+	
+	public float getHeight() {
+		return height;
+	}
 }

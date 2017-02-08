@@ -26,7 +26,6 @@ public class Window extends GUIComponent {
 	
 	@Override
 	public void render() {
-		updateScreenCoordinates();
 		RenderingManager.getSpriteBatch().draw(texture, screenX, screenY, width, height);
 		renderChildComponents();
 	}
@@ -34,7 +33,6 @@ public class Window extends GUIComponent {
 	@Override
 	public void processInputEvent(InputEvent event) {
 		if (event.handled) return;
-		updateScreenCoordinates();
 		for (int i = childComponents.size()-1; i >= 0; i--) {
 			childComponents.get(i).processInputEvent(event);
 		}

@@ -1,11 +1,14 @@
 package com.lenwohl.dreammachine.main;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class ResourceManager {
+	
+	private static final String TEXTURES_DIR = "textures/";
 	
 	private static Map<String, Resource<Texture>> textures;
 	
@@ -14,12 +17,12 @@ public class ResourceManager {
 	}
 	
 	// If the texture hasn't been load yet, load it. Increment the number of instances of the texture, and return it
-	public static Texture getTexture(String filepath) {
-		if (!textures.containsKey(filepath)) {
-			textures.put(filepath, new Resource<Texture>(new Texture(filepath)));
+	public static Texture getTexture(String filename) {
+		if (!textures.containsKey(filename)) {
+			textures.put(filename, new Resource<Texture>(new Texture(Gdx.files.internal(TEXTURES_DIR+filename))));
 		}
-		textures.get(filepath).numInstances++;
-		return textures.get(filepath).data;
+		textures.get(filename).numInstances++;
+		return textures.get(filename).data;
 	}
 	
 	// Decrement the number of instances of the texture, and if it reaches zero, dispose of the texture and remove it from the map

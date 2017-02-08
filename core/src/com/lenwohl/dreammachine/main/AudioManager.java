@@ -12,6 +12,8 @@ public class AudioManager {
 	// TODO: Play audio on a seperate thread
 	// TODO: Manage individual instances of a sound
 	
+	private static final String AUDIO_DIR = "audio/";
+	
 	private static Music music;	// Music is streamed instead of loaded into memory completely, so it doesn't have to be cached
 	private static String musicPath;
 	private static Map<String, Sound> sounds;	// Sounds are loaded directly into memory, so they should be cached
@@ -23,11 +25,11 @@ public class AudioManager {
 	}
 	
 	// Stop the current music and play the new music (even if it's the same)
-	public static void playMusic(String filepath, boolean loop) {
+	public static void playMusic(String filename, boolean loop) {
 		if(music != null) {
 			stopMusic();
 		}
-		music = Gdx.audio.newMusic(Gdx.files.internal(filepath));
+		music = Gdx.audio.newMusic(Gdx.files.internal(AUDIO_DIR+filename));
 		music.play();
 		music.setLooping(loop);
 		// Create an listener to dispose of the music when it's finished playing, and not looping
@@ -42,11 +44,11 @@ public class AudioManager {
 	}
 	
 	// Add the sound to the cache, if it's not already loaded, and play an instance of it
-	public static void playSound(String filepath) {
-		if (!sounds.containsKey(filepath)) {
-			sounds.put(filepath, Gdx.audio.newSound(Gdx.files.internal(filepath)));
+	public static void playSound(String filename) {
+		if (!sounds.containsKey(filename)) {
+			sounds.put(filename, Gdx.audio.newSound(Gdx.files.internal(AUDIO_DIR+filename)));
 		}
-		sounds.get(filepath).play();
+		sounds.get(filename).play();
 	}
 	
 	// Stop and dispose the current music
