@@ -21,11 +21,12 @@ public class ScreenContainer extends GUIComponent {
 	}
 	
 	@Override
-	protected void interceptInputEvent(InputEvent event) {
-	}
-	
-	@Override
-	protected void handleInputEvent(InputEvent event) {
+	public void processInputEvent(InputEvent event) {
+		if (event.handled) return;
+		updateScreenCoordinates();
+		for (int i = childComponents.size()-1; i >= 0; i--) {
+			childComponents.get(i).processInputEvent(event);
+		}
 	}
 	
 }

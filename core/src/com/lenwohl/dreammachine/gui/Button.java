@@ -32,11 +32,12 @@ public class Button extends GUIComponent {
 	}
 	
 	@Override
-	protected void interceptInputEvent(InputEvent event) {
-	}
-	
-	@Override
-	protected void handleInputEvent(InputEvent event) {
+	public void processInputEvent(InputEvent event) {
+		if (event.handled) return;
+		updateScreenCoordinates();
+		for (int i = childComponents.size()-1; i >= 0; i--) {
+			childComponents.get(i).processInputEvent(event);
+		}
 		// Check for click
 		if (event.type == InputEvent.Type.TOUCH_DOWN && isPointWithinBounds(event.x, event.y)) {
 			listener.onClick();

@@ -32,12 +32,13 @@ public class Window extends GUIComponent {
 	}
 	
 	@Override
-	protected void interceptInputEvent(InputEvent event) {
-	}
-	
-	@Override
-	protected void handleInputEvent(InputEvent event) {
-		// If the window cannot be touched through, block any touch within its bounds
+	public void processInputEvent(InputEvent event) {
+		if (event.handled) return;
+		updateScreenCoordinates();
+		for (int i = childComponents.size()-1; i >= 0; i--) {
+			childComponents.get(i).processInputEvent(event);
+		}
+		// If touch is within bounds of window and window cannot be touched through, block the event
 		if (event.type == InputEvent.Type.TOUCH_DOWN && blocksTouch && isPointWithinBounds(event.x, event.y)) {
 			event.handled = true;
 		}

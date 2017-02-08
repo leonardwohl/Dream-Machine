@@ -1,9 +1,11 @@
 package com.lenwohl.dreammachine.scenes;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.lenwohl.dreammachine.gui.ScreenContainer;
 import com.lenwohl.dreammachine.main.AbstractGPSInterface;
@@ -26,20 +28,17 @@ public class MenuScene extends Scene {
 	private Texture playTex;
 	private Texture pauseTex;
 	private Texture stopTex;
+	
+	private ScreenContainer guiContainer;
+	private Window movingWindow;
+	private Window musicWindow;
+	
 	private BitmapFont font;
 	private OrthographicCamera camera;
+	
 	private Collector collector;
 	private int accumulatedPoints = 0;
     private AbstractGPSInterface gpsInterface;
-	private ScreenContainer guiContainer;
-	private Button kevButton;
-	private Button yesButton;
-	private Button noButton;
-	private Button playButton;
-	private Button pauseButton;
-	private Button stopButton;
-	private Window movingWindow;
-	private Window musicWindow;
 	
 	public MenuScene() {
 		super(SceneManager.EnumScene.MENU);
@@ -65,13 +64,13 @@ public class MenuScene extends Scene {
 		collector = new Collector(60.0f, 120.0f);
         gpsInterface = DreamMachine.gpsInterface;
 		
-		yesButton = new Button(50, 10, yesTex.getWidth() * 4, yesTex.getHeight() * 4, yesTex, new Button.Listener() {
+		Button yesButton = new Button(50, 10, yesTex.getWidth() * 4, yesTex.getHeight() * 4, yesTex, new Button.Listener() {
 			@Override
 			public void onClick() {
 				movingWindow.relativeY += 50;
 			}
 		});
-		noButton = new Button(200, 10, noTex.getWidth() * 4, noTex.getHeight() * 4, noTex, new Button.Listener() {
+		Button noButton = new Button(200, 10, noTex.getWidth() * 4, noTex.getHeight() * 4, noTex, new Button.Listener() {
 			@Override
 			public void onClick() {
 				movingWindow.relativeY -= 50;
@@ -82,13 +81,13 @@ public class MenuScene extends Scene {
 		movingWindow.addChild(noButton);
 		
 		musicWindow = new Window(10, 650, 400, 100, greenTex);
-		playButton = new Button(10, 10, 64, 64, playTex, new Button.Listener() {
+		Button playButton = new Button(10, 10, 64, 64, playTex, new Button.Listener() {
 			@Override
 			public void onClick() {
 				AudioManager.playMusic("music.mp3", false);
 			}
 		});
-		pauseButton = new Button(80, 10, 64, 64, pauseTex, new Button.Listener() {
+		Button pauseButton = new Button(80, 10, 64, 64, pauseTex, new Button.Listener() {
 			@Override
 			public void onClick() {
 				if (AudioManager.isMusicPlaying()) {
@@ -98,7 +97,7 @@ public class MenuScene extends Scene {
 				}
 			}
 		});
-		stopButton = new Button(150, 10, 64, 64, stopTex, new Button.Listener() {
+		Button stopButton = new Button(150, 10, 64, 64, stopTex, new Button.Listener() {
 			@Override
 			public void onClick() {
 				AudioManager.stopMusic();
@@ -108,7 +107,7 @@ public class MenuScene extends Scene {
 		musicWindow.addChild(pauseButton);
 		musicWindow.addChild(stopButton);
 		
-		kevButton = new Button((DreamMachine.WIDTH/2)- kevTex.getWidth()/2, (DreamMachine.HEIGHT/2)- kevTex.getHeight()/2,
+		Button kevButton = new Button((DreamMachine.WIDTH/2)- kevTex.getWidth()/2, (DreamMachine.HEIGHT/2)- kevTex.getHeight()/2,
 				kevTex.getWidth(), kevTex.getHeight(), kevTex, new Button.Listener() {
 			@Override
 			public void onClick() {
