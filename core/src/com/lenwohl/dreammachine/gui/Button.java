@@ -1,6 +1,7 @@
 package com.lenwohl.dreammachine.gui;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.lenwohl.dreammachine.input.InputEvent;
 import com.lenwohl.dreammachine.main.RenderingManager;
 
@@ -10,11 +11,19 @@ import com.lenwohl.dreammachine.main.RenderingManager;
 // The onClick of the listener is called.
 public class Button extends GUIComponent {
 	
-	private Texture texture;
+	private TextureRegion texture;
 	private Listener listener;
 	
-	public Button(float relativeX, float relativeY, float width, float height, Texture texture, Listener listener) {
-		super(relativeX, relativeY, width, height);
+	public Button(String id, TextureRegion texture, Listener listener) {
+		this(id, 0, 0, 50, 30, texture, listener);
+	}
+	
+	public Button(String id, float width, float height, TextureRegion texture, Listener listener) {
+		this(id, 0, 0, width, height, texture, listener);
+	}
+	
+	public Button(String id, float relativeX, float relativeY, float width, float height, TextureRegion texture, Listener listener) {
+		super(id, relativeX, relativeY, width, height);
 		this.texture = texture;
 		this.listener = listener;
 	}

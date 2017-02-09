@@ -12,8 +12,12 @@ public class TextLabel extends GUIComponent {
 	private BitmapFont font;
 	private GlyphLayout glyphLayout;
 	
-	public TextLabel(float relativeX, float relativeY, String text, BitmapFont font) {
-		super(relativeX, relativeY, 0, 0);
+	public TextLabel(String id, String text, BitmapFont font) {
+		this(id, 0, 0, text, font);
+	}
+	
+	public TextLabel(String id, float relativeX, float relativeY, String text, BitmapFont font) {
+		super(id, relativeX, relativeY, 0, 0);
 		this.text = text;
 		this.font = font;
 		this.glyphLayout = new GlyphLayout(font, text);
@@ -35,17 +39,25 @@ public class TextLabel extends GUIComponent {
 	
 	@Override
 	public void processInputEvent(InputEvent event) {
-		
+	}
+	
+	@Override
+	public void setDimensions(float width, float height) {
+		// Dimensions are set by glyph layout. Ignore calls to setDimensions()
 	}
 	
 	public void setText(String text) {
 		this.text = text;
-		glyphLayout.setText(font, text);
+		glyphLayout.setText(font, text);	// Update glyph layout and component dimensions accordingly
+		width = glyphLayout.width;
+		height = glyphLayout.height;
 	}
 	
 	public void setFont(BitmapFont font) {
 		this.font = font;
 		glyphLayout.setText(font, text);
+		width = glyphLayout.width;
+		height = glyphLayout.height;
 	}
 	
 	public BitmapFont getFont() {

@@ -6,8 +6,8 @@ import com.lenwohl.dreammachine.input.InputEvent;
 // A simple container for other GUI components that matches the dimensions of the app screen
 public class ScreenContainer extends GUIComponent {
 	
-	public ScreenContainer() {
-		super(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+	public ScreenContainer(String id) {
+		super(id, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}
 	
 	@Override
