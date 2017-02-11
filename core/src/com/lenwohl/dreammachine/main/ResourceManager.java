@@ -16,7 +16,7 @@ public class ResourceManager {
 		textures = new HashMap<String, Resource<Texture>>();
 	}
 	
-	// If the texture hasn't been load yet, load it. Increment the number of instances of the texture, and return it
+	// If the texture hasn't been loaded yet, load it. Increment the number of instances of the texture, and return it
 	public static Texture getTexture(String filename) {
 		if (!textures.containsKey(filename)) {
 			textures.put(filename, new Resource<Texture>(new Texture(Gdx.files.internal(TEXTURES_DIR+filename))));
