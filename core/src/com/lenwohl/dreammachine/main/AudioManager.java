@@ -48,7 +48,8 @@ public class AudioManager {
 		if (!sounds.containsKey(filename)) {
 			sounds.put(filename, Gdx.audio.newSound(Gdx.files.internal(AUDIO_DIR+filename)));
 		}
-		sounds.get(filename).play();
+		// Half volume just cause the blip is fucking loud. Proper volume control should be added later.
+		sounds.get(filename).play(0.5f);
 	}
 	
 	// Stop and dispose the current music

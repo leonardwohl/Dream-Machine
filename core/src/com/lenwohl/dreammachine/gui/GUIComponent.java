@@ -12,7 +12,7 @@ import java.util.ArrayList;
 // Components have an ID that should be unique among siblings. Components can be retrieved from parents with that ID.
 public abstract class GUIComponent {
 	
-	protected float relativeX ;
+	protected float relativeX;	// Position relative to the parent component
 	protected float relativeY;
 	protected float screenX;
 	protected float screenY;
@@ -21,7 +21,7 @@ public abstract class GUIComponent {
 	protected ArrayList<GUIComponent> childComponents;
 	protected GUIComponent parentComponent;
 	protected String id;
-	protected String fullID;	// the (probably) unique ID of the component, which includes the path down the component hierarchy to it
+	protected String fullID;	// The (probably) unique ID of the component, which includes the path down the component hierarchy to it
 	
 	public GUIComponent(String id, float relativeX, float relativeY, float width, float height) {
 		this.id = id;
@@ -67,10 +67,7 @@ public abstract class GUIComponent {
 		}
 	}
 	
-	// Update the fullID of this component and all children in the case that the fullID has become invalid (this component
-	// or a parent has been moved, renamed, etc)
-	// This will be called first on the source of the change and recurse down the component hierarchy, so the parent's fullID
-	// is always expected to be valid when this is called on a component
+	// Update the fullID of this component and all children in the case that the fullID has become invalid
 	protected void recalculateFullID() {
 		if (parentComponent == null) {
 			fullID = id;
@@ -102,7 +99,7 @@ public abstract class GUIComponent {
 		return null;
 	}
 	
-	// Fills the passed array with pointers to all components for which this one is a root
+	// Fills the passed array with references to all components for which this one is a root
 	public void getAllChildComponentsRecursive(ArrayList<GUIComponent> array) {
 		for (GUIComponent c : childComponents) {
 			array.add(c);

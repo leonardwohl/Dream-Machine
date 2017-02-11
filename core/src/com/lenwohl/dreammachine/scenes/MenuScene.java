@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.lenwohl.dreammachine.gui.GUIComponent;
+import com.lenwohl.dreammachine.gui.NinePatch;
 import com.lenwohl.dreammachine.gui.ScreenContainer;
 import com.lenwohl.dreammachine.gui.TextLabel;
 import com.lenwohl.dreammachine.main.AbstractGPSInterface;
@@ -33,6 +34,7 @@ public class MenuScene extends Scene {
 	private Texture playTex;
 	private Texture pauseTex;
 	private Texture stopTex;
+	private Texture windowSkin;
 	
 	private BitmapFont mainFont;
 	private BitmapFont mcFont;
@@ -41,6 +43,8 @@ public class MenuScene extends Scene {
 	private int accumulatedPoints = 0;
     private AbstractGPSInterface gpsInterface;
 	private ScreenContainer guiContainer;
+	
+	private NinePatch windowSkinNP;
 	
 	public MenuScene() {
 		super(SceneManager.EnumScene.MENU);
@@ -58,7 +62,9 @@ public class MenuScene extends Scene {
 		playTex = ResourceManager.getTexture("play.png");
 		pauseTex = ResourceManager.getTexture("pause.png");
 		stopTex = ResourceManager.getTexture("stop.png");
+		windowSkin = ResourceManager.getTexture("window_skin.png");
 		
+		windowSkinNP = new NinePatch(new TextureRegion(windowSkin));
 		mainFont = new BitmapFont();
 		camera = new OrthographicCamera(DreamMachine.WIDTH, DreamMachine.HEIGHT);	// Camera management should be handled in RenderingManager
 		camera.position.set(camera.viewportWidth/2, camera.viewportHeight/2, 0);
@@ -67,7 +73,7 @@ public class MenuScene extends Scene {
         gpsInterface = DreamMachine.gpsInterface;
 		
 		// Moving Window
-		Window movingWindow = new Window("moving_window", 10, 200, 400, 100, new TextureRegion(greenTex));
+		Window movingWindow = new Window("moving_window", 10, 200, 400, 100, windowSkinNP);
 		movingWindow.addChild(new Button("yes_button", 50, 10,  yesTex.getWidth() * 4, yesTex.getHeight() * 4, new TextureRegion(yesTex), new Button.Listener() {
 			@Override
 			public void onClick() {
@@ -84,7 +90,7 @@ public class MenuScene extends Scene {
 		}));
 		
 		// Music Window
-		Window musicWindow = new Window("music_window", 10, 650, 400, 100, new TextureRegion(greenTex));
+		Window musicWindow = new Window("music_window", 10, 650, 400, 100, windowSkinNP);
 		musicWindow.addChild(new Button("play_button", 10, 10, 64, 64, new TextureRegion(playTex), new Button.Listener() {
 			@Override
 			public void onClick() {
@@ -121,7 +127,7 @@ public class MenuScene extends Scene {
 		
 		// GPS Control Window
 		mcFont = new BitmapFont(Gdx.files.internal("mcfont.fnt"));
-		Window gpsWindow = new Window("gps_window", 10, 350, 100, 200, new TextureRegion(greenTex));
+		Window gpsWindow = new Window("gps_window", 10, 350, 100, 200, windowSkinNP);
 		gpsWindow.addChild(new Button("len_button", 10, 120, 80, 50, new TextureRegion(purpleTex), new Button.Listener() {
 			@Override
 			public void onClick() {
@@ -168,6 +174,7 @@ public class MenuScene extends Scene {
 		mainFont.draw(sb, String.format("%.0f / %.0f   (%d)", collector.getStoredPoints(), collector.getMaximumStoredPoints(), accumulatedPoints), 50, 100);
 		mainFont.getData().setScale(2);
 		mainFont.draw(sb, "GPS:"+" "+gpsInterface.getCurrentGPSPosition().toString(), 50, 600);
+		
 		sb.end();
 		
 	}
@@ -211,6 +218,7 @@ public class MenuScene extends Scene {
 		ResourceManager.freeTexture(playTex);
 		ResourceManager.freeTexture(pauseTex);
 		ResourceManager.freeTexture(stopTex);
+		ResourceManager.freeTexture(windowSkin);
 		mainFont.dispose();
 		mcFont.dispose();
 	}

@@ -1,9 +1,6 @@
 package com.lenwohl.dreammachine.gui;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.lenwohl.dreammachine.input.InputEvent;
-import com.lenwohl.dreammachine.main.RenderingManager;
 
 // TODO: Add control over the positions of child components within the window
 // TODO: Add proper nine-patch texture tiling to windows
@@ -12,20 +9,20 @@ import com.lenwohl.dreammachine.main.RenderingManager;
 // Simple component with a texture, meant for holding other components
 public class Window extends GUIComponent {
 	
-	public TextureRegion texture;
-	public boolean blocksTouch;	// Determines whether or not the window can be clicked through
+	private NinePatch ninePatch;
+	private boolean blocksTouch;	// Determines whether or not the window can be clicked through
 	
-	public Window(String id, TextureRegion texture) {
-		this(id, 0, 0, 200, 100, texture);
+	public Window(String id, NinePatch ninePatch) {
+		this(id, 0, 0, 200, 100, ninePatch);
 	}
 	
-	public Window(String id, float width, float height, TextureRegion texture) {
-		this(id, 0, 0, width, height, texture);
+	public Window(String id, float width, float height, NinePatch ninePatch) {
+		this(id, 0, 0, width, height, ninePatch);
 	}
 	
-	public Window(String id, float relativeX, float relativeY, float width, float height, TextureRegion texture) {
+	public Window(String id, float relativeX, float relativeY, float width, float height, NinePatch ninePatch) {
 		super(id, relativeX, relativeY, width, height);
-		this.texture = texture;
+		this.ninePatch = ninePatch;
 		this.blocksTouch = true;
 	}
 	
@@ -36,7 +33,7 @@ public class Window extends GUIComponent {
 	
 	@Override
 	public void render() {
-		RenderingManager.getSpriteBatch().draw(texture, screenX, screenY, width, height);
+		ninePatch.render(screenX, screenY, width, height);
 		renderChildComponents();
 	}
 	
