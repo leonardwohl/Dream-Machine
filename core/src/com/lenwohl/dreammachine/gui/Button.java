@@ -1,6 +1,5 @@
 package com.lenwohl.dreammachine.gui;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.lenwohl.dreammachine.input.InputEvent;
 import com.lenwohl.dreammachine.main.RenderingManager;

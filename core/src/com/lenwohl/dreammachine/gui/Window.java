@@ -3,7 +3,6 @@ package com.lenwohl.dreammachine.gui;
 import com.lenwohl.dreammachine.input.InputEvent;
 
 // TODO: Add control over the positions of child components within the window
-// TODO: Add proper nine-patch texture tiling to windows
 
 
 // Simple component with a texture, meant for holding other components
