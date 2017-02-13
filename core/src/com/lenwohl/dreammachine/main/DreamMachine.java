@@ -1,6 +1,5 @@
 package com.lenwohl.dreammachine.main;
 
-import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -42,12 +41,10 @@ public class DreamMachine extends ApplicationAdapter {
 	public void processInputEvent(InputEvent event) {
 		// A simple example of input handling:
 		// Intercept a press of the Escape key to exit the app, or simply pass the input along.
-		// "return" may be used to completely intercept an input, or the input can be handled without
-		// returning so that other classes can handle it as well.
 		if (event.type == InputEvent.Type.KEY_DOWN) {
 			if (event.key == Input.Keys.ESCAPE) {
 				Gdx.app.exit();
-				return;
+				event.handled = true;
 			}
 		}
 		SceneManager.processInputEvent(event);

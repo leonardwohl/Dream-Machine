@@ -33,7 +33,7 @@ public class SceneManager {
 		}
 		if (sceneToPush != null) {
 			switch (sceneToPush) {
-				case MENU: scenes.push(new SceneMenu()); break;
+				case MENU: scenes.push(new MenuScene()); break;
 			}
 			sceneToPush = null;
 			scenes.peek().init();
@@ -51,6 +51,7 @@ public class SceneManager {
 	}
 	
 	public static void processInputEvent(InputEvent event) {
+		if (event.handled) return;
 		if (!scenes.isEmpty()) {
 			scenes.peek().processInputEvent(event);
 		}

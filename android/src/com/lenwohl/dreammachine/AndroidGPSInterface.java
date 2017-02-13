@@ -17,7 +17,6 @@ public class AndroidGPSInterface extends AbstractGPSInterface {
     private Location mLastLocation;
     private Vector2 currentLocation;
     private boolean gpsPermissionGranted;
-    private boolean gpsEnabled;
 
     public AndroidGPSInterface() {
 
@@ -53,6 +52,7 @@ public class AndroidGPSInterface extends AbstractGPSInterface {
         gpsPermissionGranted = permission;
     }
 
+    @Override
     public void setGpsEnabled(boolean b){
         if(gpsPermissionGranted) {
             gpsEnabled = b;
