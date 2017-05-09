@@ -1,4 +1,4 @@
-package com.lenwohl.dreammachine;
+package com.lenwohl.dreammachine.main;
 
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -14,7 +14,6 @@ import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListe
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.lenwohl.dreammachine.main.DreamMachine;
 
 public class AndroidLauncher extends AndroidApplication implements ConnectionCallbacks, OnConnectionFailedListener, LocationListener{
 
@@ -22,7 +21,7 @@ public class AndroidLauncher extends AndroidApplication implements ConnectionCal
     private Location mLastLocation;
     private boolean mRequestingLocationUpdates;
     private LocationRequest mLocationRequest;
-    private AndroidGPSInterface gps;
+    private GPSInterface gps;
     public static final int LOCATION_PERMISSION_REQUEST = 1;
 
 	@Override
@@ -32,7 +31,7 @@ public class AndroidLauncher extends AndroidApplication implements ConnectionCal
         DreamMachine dm = new DreamMachine();
 
         // Create a GoogleApiClient instance
-        gps = new AndroidGPSInterface();
+        gps = new GPSInterface();
         mRequestingLocationUpdates = true;
         dm.gpsInterface = gps;
         if(mGoogleApiClient == null) {

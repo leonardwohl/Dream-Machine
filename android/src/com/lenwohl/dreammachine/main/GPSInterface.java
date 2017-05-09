@@ -1,24 +1,18 @@
-package com.lenwohl.dreammachine;
+package com.lenwohl.dreammachine.main;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.pm.PackageManager;
+
 import android.location.Location;
-import android.support.v4.app.ActivityCompat;
-
 import com.badlogic.gdx.math.Vector2;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.FusedLocationProviderApi;
-import com.google.android.gms.location.LocationServices;
-import com.lenwohl.dreammachine.main.AbstractGPSInterface;
 
-public class AndroidGPSInterface extends AbstractGPSInterface {
-
+public class GPSInterface {
+    
+    protected boolean gpsEnabled;
+    protected Vector2 virtualGPSPosition = new Vector2(0.0f, 0.0f);
     private Location mLastLocation;
     private Vector2 currentLocation;
     private boolean gpsPermissionGranted;
 
-    public AndroidGPSInterface() {
+    public GPSInterface() {
 
         currentLocation = new Vector2();
         if (mLastLocation != null) {
@@ -28,8 +22,7 @@ public class AndroidGPSInterface extends AbstractGPSInterface {
         }
 
     }
-
-	@Override
+    
 	public Vector2 getCurrentGPSPosition() {
 
         if(gpsPermissionGranted && gpsEnabled){
@@ -37,8 +30,9 @@ public class AndroidGPSInterface extends AbstractGPSInterface {
                 currentLocation.set((float)mLastLocation.getLatitude(), (float)mLastLocation.getLongitude());
             }
             return currentLocation;
+        } else {
+            return virtualGPSPosition;
         }
-		return null;
 	}
 
     public void updateLocation(Location location){
@@ -51,8 +45,7 @@ public class AndroidGPSInterface extends AbstractGPSInterface {
     public void setPermission(boolean permission){
         gpsPermissionGranted = permission;
     }
-
-    @Override
+    
     public void setGpsEnabled(boolean b){
         if(gpsPermissionGranted) {
             gpsEnabled = b;
@@ -60,5 +53,9 @@ public class AndroidGPSInterface extends AbstractGPSInterface {
             gpsEnabled = false;
         }
     }
-	
+    
+    public void setVirtualGPSPosition(float latitude, float longitude) {
+        virtualGPSPosition.x = latitude;
+        virtualGPSPosition.y = longitude;
+    }
 }

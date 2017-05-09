@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.lenwohl.dreammachine.gui.GUIComponent;
 import com.lenwohl.dreammachine.gui.MenuSceneGUI;
 import com.lenwohl.dreammachine.idlegame.Collector;
+import com.lenwohl.dreammachine.main.AudioManager;
 import com.lenwohl.dreammachine.main.DreamMachine;
 import com.lenwohl.dreammachine.input.InputEvent;
 import com.lenwohl.dreammachine.main.ResourceManager;
@@ -40,7 +41,7 @@ public class MenuScene extends Scene {
 		collector = new Collector(60.0f, 120.0f);
 		gui = new MenuSceneGUI(this);
 		gui.create();
-		//AudioManager.playMusic("music.mp3", false);
+		AudioManager.playMusic("music.mp3", false);
 		
 	}
 	

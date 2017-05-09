@@ -14,7 +14,7 @@ public class DreamMachine extends ApplicationAdapter {
 	public static final int WIDTH = 480;
 	public static final int HEIGHT = 800;
 	public static final String TITLE = "Dream Machine";
-	public static AbstractGPSInterface gpsInterface;
+	public static GPSInterface gpsInterface;
 	public InputHandler inputHandler;
 
 	@Override
@@ -54,7 +54,7 @@ public class DreamMachine extends ApplicationAdapter {
 	public void dispose () {
 	}
 	
-	public static AbstractGPSInterface getGpsInterface() {
+	public static GPSInterface getGpsInterface() {
 		return gpsInterface;
 	}
 	
