@@ -6,12 +6,8 @@ import java.util.Stack;
 
 public class SceneManager {
 	
-	public enum EnumScene {
-		MENU
-	}
-	
 	private static Stack<Scene> scenes;
-	private static EnumScene sceneToPush;
+	private static Class<? extends Scene> sceneToPush;
 	private static boolean popScene;
 	
 	public static void initialize() {
@@ -32,8 +28,10 @@ public class SceneManager {
 			popScene = false;
 		}
 		if (sceneToPush != null) {
-			switch (sceneToPush) {
-				case MENU: scenes.push(new MenuScene()); break;
+			try {
+				scenes.push(sceneToPush.newInstance());
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 			sceneToPush = null;
 			scenes.peek().init();
@@ -58,8 +56,8 @@ public class SceneManager {
 	}
 	
 	// Push a scene at the next update
-	public static void pushScene(EnumScene sceneID) {
-		sceneToPush = sceneID;
+	public static void pushScene(Class<? extends Scene> scene) {
+		sceneToPush = scene;
 	}
 	
 	// Pop the top scene at the next update
@@ -68,19 +66,19 @@ public class SceneManager {
 	}
 	
 	// Pop the top scene and push a new one at the next update
-	public static void switchScene(EnumScene sceneID) {
+	public static void switchScene(Class<? extends Scene> scene) {
 		popScene = true;
-		sceneToPush = sceneID;
+		sceneToPush = scene;
 	}
 	
 	// Pop the top scene and push it back on at the next update
 	public static void reloadScene() {
 		popScene = true;
-		sceneToPush = scenes.peek().getSceneID();
+		sceneToPush = scenes.peek().getClass();
 	}
 	
-	public static EnumScene getCurrentSceneID() {
-		if (!scenes.isEmpty()) return scenes.peek().getSceneID();
+	public static Class<? extends Scene> getCurrentSceneClass() {
+		if (!scenes.isEmpty()) return scenes.peek().getClass();
 		else return null;
 	}
 	

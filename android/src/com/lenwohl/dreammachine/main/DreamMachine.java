@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 
 import com.lenwohl.dreammachine.input.InputEvent;
 import com.lenwohl.dreammachine.input.InputHandler;
+import com.lenwohl.dreammachine.scenes.MenuScene;
 import com.lenwohl.dreammachine.scenes.SceneManager;
 
 public class DreamMachine extends ApplicationAdapter {
@@ -23,7 +24,7 @@ public class DreamMachine extends ApplicationAdapter {
 		ResourceManager.initialize();
 		RenderingManager.initialize();
         AudioManager.initialize();
-		SceneManager.pushScene(SceneManager.EnumScene.MENU);
+		SceneManager.pushScene(MenuScene.class);
 		inputHandler = new InputHandler();
 		Gdx.input.setInputProcessor(inputHandler);
 	}

@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.lenwohl.dreammachine.gui.GUIComponent;
 import com.lenwohl.dreammachine.gui.MenuSceneGUI;
 import com.lenwohl.dreammachine.idlegame.Collector;
@@ -26,19 +27,15 @@ public class MenuScene extends Scene {
 	public Collector collector;
 	public int accumulatedPoints = 0;
 	
-	public MenuScene() {
-		super(SceneManager.EnumScene.MENU);
-	}
-	
 	@Override
 	public void init() {
 		
 		bgTex = ResourceManager.getTexture("bg1.png");
 		font = new BitmapFont();
-		camera = new OrthographicCamera(DreamMachine.WIDTH, DreamMachine.HEIGHT);	// Camera management should be handled in RenderingManager
+		camera = new OrthographicCamera(DreamMachine.WIDTH, DreamMachine.HEIGHT);	// TODO: Camera management should be handled in RenderingManager
 		camera.position.set(camera.viewportWidth/2, camera.viewportHeight/2, 0);
 		camera.update();
-		collector = new Collector(60.0f, 120.0f);
+		collector = new Collector(60.0f, 120.0f, new Vector2(0.0f, 0.0f));
 		gui = new MenuSceneGUI(this);
 		gui.create();
 		AudioManager.playMusic("music.mp3", false);
