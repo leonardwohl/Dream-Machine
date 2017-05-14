@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 
 import com.lenwohl.dreammachine.input.InputEvent;
 import com.lenwohl.dreammachine.input.InputHandler;
+import com.lenwohl.dreammachine.scenes.MenuScene;
 import com.lenwohl.dreammachine.scenes.SceneManager;
 
 public class DreamMachine extends ApplicationAdapter {
@@ -14,7 +15,7 @@ public class DreamMachine extends ApplicationAdapter {
 	public static final int WIDTH = 480;
 	public static final int HEIGHT = 800;
 	public static final String TITLE = "Dream Machine";
-	public static AbstractGPSInterface gpsInterface;
+	public static GPSInterface gpsInterface;
 	public InputHandler inputHandler;
 
 	@Override
@@ -23,7 +24,7 @@ public class DreamMachine extends ApplicationAdapter {
 		ResourceManager.initialize();
 		RenderingManager.initialize();
         AudioManager.initialize();
-		SceneManager.pushScene(SceneManager.EnumScene.MENU);
+		SceneManager.pushScene(MenuScene.class);
 		inputHandler = new InputHandler();
 		Gdx.input.setInputProcessor(inputHandler);
 	}
@@ -54,7 +55,7 @@ public class DreamMachine extends ApplicationAdapter {
 	public void dispose () {
 	}
 	
-	public static AbstractGPSInterface getGpsInterface() {
+	public static GPSInterface getGpsInterface() {
 		return gpsInterface;
 	}
 	

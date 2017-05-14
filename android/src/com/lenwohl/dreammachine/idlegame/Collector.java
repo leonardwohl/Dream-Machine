@@ -1,17 +1,21 @@
 package com.lenwohl.dreammachine.idlegame;
 
+import com.badlogic.gdx.math.Vector2;
+
 public class Collector {
 	
 	private float pointsPerMinute;
 	private float storedPoints;
 	private float maximumStoredPoints;
 	private long lastTimeUpdated;
+	private Vector2 gpsPosition;
 	
-	public Collector(float pointsPerMinute, float maximumStoredPoints) {
+	public Collector(float pointsPerMinute, float maximumStoredPoints, Vector2 gpsPosition) {
 		this.pointsPerMinute = pointsPerMinute;
 		this.maximumStoredPoints = maximumStoredPoints;
-		this.storedPoints = 0;
-		this.lastTimeUpdated = System.currentTimeMillis();
+		this.gpsPosition = gpsPosition;
+		storedPoints = 0;
+		lastTimeUpdated = System.currentTimeMillis();
 	}
 	
 	public void updatePoints() {
@@ -43,6 +47,14 @@ public class Collector {
 	
 	public void setMaximumStoredPoints(float maximumStoredPoints) {
 		this.maximumStoredPoints = maximumStoredPoints;
+	}
+	
+	public Vector2 getGpsPosition() {
+		return gpsPosition;
+	}
+	
+	public void setGpsPosition(Vector2 gpsPosition) {
+		this.gpsPosition = gpsPosition;
 	}
 	
 }

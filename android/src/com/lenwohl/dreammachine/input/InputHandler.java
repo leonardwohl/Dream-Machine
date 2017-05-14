@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.lenwohl.dreammachine.main.DreamMachine;
 
-// Recieves input events from libgdx, wraps them in a custom InputEvent, and passes them to the DreamMachine instance
+// Receives input events from libgdx, wraps them in a custom InputEvent, and passes them to the DreamMachine instance
 // The DreamMachine instance can handle the input itself (such as by exitting on ESC), or it can pass the input down along
 // the input chain. Similarly, all other classes along the chain can handle the input and/or pass it down.
 // The input chain is as follows: DreamMachine > SceneManager > Top Scene > Scene GUI > (Hierarchy of GUI components)
